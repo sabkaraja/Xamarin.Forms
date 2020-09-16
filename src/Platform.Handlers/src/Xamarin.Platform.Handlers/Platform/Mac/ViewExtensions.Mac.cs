@@ -1,6 +1,7 @@
 ﻿using Foundation;
 using AppKit;
 using Xamarin.Forms;
+using CoreGraphics;
 
 namespace Xamarin.Platform
 {
@@ -21,13 +22,23 @@ namespace Xamarin.Platform
 		public static void SetBackgroundColor(this NSView view, NSColor color)
 		{
 			view.WantsLayer = true;
-			view.Layer.BackgroundColor = color.CGColor;
+			view.Layer!.BackgroundColor = color.CGColor;
 		}
 
-		public static NSColor GetBackgroundColor(this NSView view) =>
-			NSColor.FromCGColor(view.Layer.BackgroundColor);
+		public static NSColor? GetBackgroundColor(this NSView view)
+		{
+			if (view == null || view.Layer == null)
+				return null;
 
-		public static CoreGraphics.CGSize SizeThatFits(this NSView view, CoreGraphics.CGSize size) =>
+			CGColor? color = view.Layer.BackgroundColor;
+
+			if (color != null)
+				return NSColor.FromCGColor(color);
+
+			return null;
+		}
+
+		public static CGSize SizeThatFits(this NSView view, CoreGraphics.CGSize size) =>
 			(view as NSControl)?.SizeThatFits(size) ?? view.FittingSize;
 
 		public static void SetTextColor(this NSButton button, Color color, Color defaultColor) =>

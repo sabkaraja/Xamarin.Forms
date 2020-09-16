@@ -1,4 +1,4 @@
-﻿using Xamarin.Forms;
+﻿using System.Diagnostics.CodeAnalysis;
 
 #if __IOS__
 using NativeView = UIKit.UIView;
@@ -20,25 +20,27 @@ namespace Xamarin.Platform.Handlers
 		where TNativeView : NativeView
 #endif
 	{
-		protected readonly PropertyMapper defaultMapper;
-		protected PropertyMapper mapper;
+		protected readonly PropertyMapper _defaultMapper;
+		protected PropertyMapper? _mapper;
 		bool _hasContainer;
 		static bool HasSetDefaults;
 
 		protected AbstractViewHandler(PropertyMapper mapper)
 		{
-			defaultMapper = mapper;
+			_defaultMapper = mapper;
 		}
 
 		protected abstract TNativeView CreateView();
 
-		public NativeView View => TypedNativeView;
+		[MaybeNull, AllowNull]
+		protected TNativeView TypedNativeView { get; private set; } = default!;
 
-		public TNativeView TypedNativeView { get; private set; }
+		[MaybeNull, AllowNull]
+		protected TVirtualView VirtualView { get; private set; } = default!;
 
-		protected TVirtualView VirtualView { get; private set; }
+		public NativeView? View => TypedNativeView;
 
-		public object NativeView => TypedNativeView;
+		public object? NativeView => TypedNativeView;
 
 		public virtual void SetView(IView view)
 		{
@@ -51,7 +53,7 @@ namespace Xamarin.Platform.Handlers
 				HasSetDefaults = true;
 			}
 
-			mapper = defaultMapper;
+			_mapper = _defaultMapper;
 
 			if (VirtualView is IPropertyMapperView imv)
 			{
@@ -62,12 +64,12 @@ namespace Xamarin.Platform.Handlers
 				}
 				if (instancePropertyMapper != null)
 				{
-					instancePropertyMapper.Chained = defaultMapper;
-					mapper = instancePropertyMapper;
+					instancePropertyMapper.Chained = _defaultMapper;
+					_mapper = instancePropertyMapper;
 				}
 			}
 
-			mapper?.UpdateProperties(this, VirtualView);
+			_mapper?.UpdateProperties(this, VirtualView);
 		}
 
 		public virtual void Remove(IView view)
@@ -81,7 +83,7 @@ namespace Xamarin.Platform.Handlers
 		}
 
 		public virtual void UpdateValue(string property)
-			=> mapper?.UpdateProperty(this, VirtualView, property);
+			=> _mapper?.UpdateProperty(this, VirtualView, property);
 
 		protected virtual void SetupDefaults() { }
 
@@ -104,7 +106,5 @@ namespace Xamarin.Platform.Handlers
 			}
 
 		}
-
-		static protected Color CleanseColor(Color color, Color defaultColor) => color.IsDefault ? defaultColor : color;
 	}
 }

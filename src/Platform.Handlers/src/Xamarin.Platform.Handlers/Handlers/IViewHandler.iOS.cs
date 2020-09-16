@@ -1,10 +1,9 @@
-﻿using System;
-using UIKit;
+﻿using UIKit;
 
 namespace Xamarin.Platform
 {
 	public interface INativeViewRenderer : IViewHandler
 	{
-		UIView View { get; }
+		UIView? View { get; }
 	}
 }

@@ -17,17 +17,19 @@ namespace Xamarin.Platform
 			}
 		}
 
-		public void UpdateProperty(IViewHandler viewRenderer, IFrameworkElement virtualView, string property)
+		public void UpdateProperty(IViewHandler viewRenderer, IFrameworkElement? virtualView, string property)
 		{
 			if (virtualView == null)
 				return;
+
 			UpdatePropertyCore(property, viewRenderer, virtualView);
 		}
 
-		public void UpdateProperties(IViewHandler viewRenderer, IFrameworkElement virtualView)
+		public void UpdateProperties(IViewHandler viewRenderer, IFrameworkElement? virtualView)
 		{
 			if (virtualView == null)
 				return;
+
 			foreach (var key in Keys)
 			{
 				UpdatePropertyCore(key, viewRenderer, virtualView);
@@ -40,10 +42,11 @@ namespace Xamarin.Platform
 	public class PropertyMapper<TVirtualView> : PropertyMapper, IEnumerable
 		where TVirtualView : IFrameworkElement
 	{
-		PropertyMapper _chained;
-		ICollection<string> _cachedKeys;
+		PropertyMapper? _chained;
+		ICollection<string>? _cachedKeys;
+		ActionMapper<TVirtualView>? _actions;
 
-		public PropertyMapper Chained
+		public PropertyMapper? Chained
 		{
 			get => _chained;
 			set
@@ -69,15 +72,14 @@ namespace Xamarin.Platform
 		{
 		}
 
-		public PropertyMapper(PropertyMapper chained)
+		public PropertyMapper(PropertyMapper? chained)
 		{
 			Chained = chained;
 		}
 
-		ActionMapper<TVirtualView> actions;
 		public ActionMapper<TVirtualView> Actions
 		{
-			get => actions ??= new ActionMapper<TVirtualView>(this);
+			get => _actions ??= new ActionMapper<TVirtualView>(this);
 		}
 
 		protected override void UpdatePropertyCore(string key, IViewHandler viewRenderer, IFrameworkElement virtualView)

@@ -5,7 +5,7 @@ namespace Xamarin.Platform
 {
 	public static class HandlerExtensions
 	{
-		public static NSView ToNative(this IView view)
+		public static NSView? ToNative(this IView view)
 		{
 			if (view == null)
 				return null;

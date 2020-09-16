@@ -24,11 +24,11 @@ namespace Xamarin.Platform.Handlers
 
 		public static void MapBackgroundColor(IViewHandler renderer, IView view)
 		{
-			var nativeView = (NativeView)renderer.NativeView;
+			var nativeView = renderer.NativeView as NativeView;
 			var color = view.BackgroundColor;
 
 			if (color != null && !color.IsDefault)
-				nativeView.SetBackgroundColor(color.ToNative());
+				nativeView?.SetBackgroundColor(color.ToNative());
 		}
 	}
 }
