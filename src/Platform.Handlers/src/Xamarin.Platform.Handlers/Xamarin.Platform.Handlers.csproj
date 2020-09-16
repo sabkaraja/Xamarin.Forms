@@ -44,21 +44,4 @@
     <PackageReference Include="Xamarin.Google.Android.Material" Version="1.0.0-rc1" />
     <PackageReference Include="Xamarin.AndroidX.Legacy.Support.V4" Version="1.0.0-rc1" />
   </ItemGroup>
-    <ItemGroup>
-      <Compile Remove="Platform\Standard\HandlerExtensions.Standard.cs" />
-    </ItemGroup>
-    <ItemGroup>
-      <None Include="Platform\Standard\HandlerExtensions.Standard.cs" />
-    </ItemGroup> 
-    <ItemGroup>
-      <Compile Update="Primitives\LineBreakMode.cs">
-        <SubType></SubType>
-      </Compile>
-      <Compile Update="Primitives\TextDecorations.cs">
-        <SubType></SubType>
-      </Compile>
-      <Compile Update="Primitives\Thickness.cs">
-        <SubType></SubType>
-      </Compile>
-    </ItemGroup>
 </Project>

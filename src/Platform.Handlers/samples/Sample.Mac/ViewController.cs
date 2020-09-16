@@ -1,7 +1,6 @@
 ﻿using System;
 using AppKit;
 using Foundation;
-using Xamarin.Forms;
 using Xamarin.Platform;
 
 namespace Sample.Mac
@@ -11,7 +10,10 @@ namespace Sample.Mac
 		public ViewController(IntPtr handle) : base(handle)
 		{
 			var app = new MyApp();
-			View = (app.MainPage as ContentPage).Content.ToNative();
+
+			IView content = app.CreateView();
+
+			View = content.ToNative();
 		}
 
 		public override NSObject RepresentedObject

@@ -36,9 +36,4 @@
     <ProjectReference Include="..\..\src\Xamarin.Platform.Handlers\Xamarin.Platform.Handlers.csproj" />
     <ProjectReference Include="..\..\..\..\Xamarin.Forms.Core\Xamarin.Forms.Core.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Update="Platform.cs">
-      <SubType></SubType>
-    </Compile>
-  </ItemGroup>
 </Project>
